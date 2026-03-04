@@ -71,6 +71,8 @@ function gameLoop() {
 }
 
 function update() {
+    if (!gameStarted) return;
+    
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
     // collisione con muri

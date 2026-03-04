@@ -2,6 +2,13 @@ let gameStarted = false;
 let wrapMode = false; // false = muri letali, true = wrap-around
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+resizeCanvas();
+window.addEventListener("resize", () => {
+    const wasRunning = gameStarted; // salva se stava giocando
+    gameStarted = false;            // blocca il movimento
+    resizeCanvas();                 // ridimensiona correttamente
+    if (wasRunning) gameStarted = true; // riprende se serviva
+});
 
 const gridSize = 20;
 let snake = [{ x: 200, y: 200 }];
@@ -18,6 +25,29 @@ const headImg = new Image();
 headImg.src = "head.png"
 
 let food = randomFood();
+
+function resizeCanvas() {
+    const padding = 40; // margine dai bordi
+    const availW = window.innerWidth - padding;
+    const availH = window.innerHeight - padding;
+
+    // Numero di celle intere che entrano
+    const cols = Math.floor(availW / gridSize);
+    const rows = Math.floor(availH / gridSize);
+
+    // Imposto le nuove dimensioni del canvas
+    canvas.width  = cols * gridSize;
+    canvas.height = rows * gridSize;
+
+    // Mantiene il serpente dentro l'area
+    snake[0].x = Math.min(snake[0].x, canvas.width - gridSize);
+    snake[0].y = Math.min(snake[0].y, canvas.height - gridSize);
+
+    // rigenera il cibo se fuori area
+    if (food.x >= canvas.width || food.y >= canvas.height) {
+        food = randomFood();
+    }
+}
 
 function randomFood() {
     let newPos;

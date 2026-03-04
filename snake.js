@@ -6,6 +6,14 @@ let snake = [{ x: 200, y: 200 }];
 let dx = gridSize;
 let dy = 0;
 
+let score = 0;
+
+// Caricamento immagini
+const foodImg = new Image();
+foodImg.src = "food.png"
+const headImg = new Image();
+headImg.src = "head.png"
+
 let food = randomFood();
 
 function randomFood() {
@@ -56,6 +64,8 @@ function update() {
 
     // mangia il cibo
     if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById("score").textContent=score;
         food = randomFood();
     } else {
         snake.pop();
@@ -74,15 +84,20 @@ function draw() {
     ctx.fillStyle = "#111";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // disegna serpente
-    ctx.fillStyle = "#0f0";
-    snake.forEach(part => {
-        ctx.fillRect(part.x, part.y, gridSize, gridSize);
+    
+    // disegna serpente (testa con immagine)
+    snake.forEach((part, index) => {
+        if (index === 0) {
+            ctx.drawImage(headImg, part.x, part.y, gridSize, gridSize);
+        } else {
+            ctx.fillStyle = "#0f0";
+            ctx.fillRect(part.x, part.y, gridSize, gridSize);
+        }
     });
 
-    // disegna cibo
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, gridSize, gridSize);
+    // disegna cibo con immagine
+    ctx.drawImage(foodImg, food.x, food.y, gridSize, gridSize);
+
 }
 
 gameLoop();

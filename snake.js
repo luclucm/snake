@@ -1,3 +1,4 @@
+let wrapMode = false; // false = muri letali, true = wrap-around
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -18,11 +19,28 @@ headImg.src = "head.png"
 let food = randomFood();
 
 function randomFood() {
-    return {
-        x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
-        y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize
-    };
+    let newPos;
+    do {
+        newPos = {
+            x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize,
+            y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize
+        };
+    } while (snake.some(segment =>
+        segment.x === newPos.x && segment.y === newPos.y
+    ));
+
+    return newPos;
 }
+
+document.getElementById("wallsBtn").onclick = () => {
+    wrapMode = false;
+    document.getElementById("startMenu").style.display = "none";
+};
+
+document.getElementById("wrapBtn").onclick = () => {
+    wrapMode = true;
+    document.getElementById("startMenu").style.display = "none";
+};
 
 document.addEventListener("keydown", changeDirection);
 
@@ -51,15 +69,26 @@ function update() {
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
     // collisione con muri
-    if (
-        head.x < 0 ||
-        head.x >= canvas.width ||
-        head.y < 0 ||
-        head.y >= canvas.height
-    ) {
-        alert("Game Over!");
-        document.location.reload();
+    // Movimento base normale
+    let nx = snake[0].x + dx;
+    let ny = snake[0].y + dy;
+    
+    // Modalità wrap-around
+    if (wrapMode) {
+        if (nx < 0) nx = canvas.width - gridSize;
+        if (nx >= canvas.width) nx = 0;
+        if (ny < 0) ny = canvas.height - gridSize;
+        if (ny >= canvas.height) ny = 0;
+    } else {
+        // Modalità muri letali
+        if (nx < 0 || nx >= canvas.width || ny < 0 || ny >= canvas.height) {
+            alert("Game Over!");
+            document.location.reload();
+            return;
+        }
     }
+    
+    const new_head = { x: nx, y: ny };
 
     snake.unshift(head);
 
@@ -94,8 +123,13 @@ function draw() {
         if (index === 0) {
             ctx.drawImage(headImg, part.x, part.y, gridSize, gridSize);
         } else {
-            ctx.fillStyle = "#0f0";
+            // Corpo: bianco con bordo nero
+            ctx.fillStyle = "#ffffff";
             ctx.fillRect(part.x, part.y, gridSize, gridSize);
+            
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(part.x, part.y, gridSize, gridSize);
         }
     });
 

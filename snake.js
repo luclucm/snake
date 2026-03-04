@@ -180,7 +180,15 @@ function draw() {
     // disegna serpente (testa con immagine)
     snake.forEach((part, index) => {
         if (index === 0) {
-            ctx.drawImage(headImg, part.x, part.y, gridSize*1.1, gridSize*1.1);
+            const HEAD_SCALE = 1.4; // ingrandisci come vuoi!
+            const size = gridSize * HEAD_SCALE;
+            ctx.drawImage(
+                headImg,
+                part.x - (size - gridSize) / 2,
+                part.y - (size - gridSize) / 2,
+                size,
+                size
+            );
         } else {
             // Corpo: bianco con bordo nero
             ctx.fillStyle = "#ffffff";

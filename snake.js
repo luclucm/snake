@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const gridSize = 20;
+const gridSize = 40;
 let snake = [{ x: 200, y: 200 }];
 let dx = gridSize;
 let dy = 0;

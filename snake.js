@@ -2,13 +2,6 @@ let gameStarted = false;
 let wrapMode = false; // false = muri letali, true = wrap-around
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-resizeCanvas();
-window.addEventListener("resize", () => {
-    const wasRunning = gameStarted; // salva se stava giocando
-    gameStarted = false;            // blocca il movimento
-    resizeCanvas();                 // ridimensiona correttamente
-    if (wasRunning) gameStarted = true; // riprende se serviva
-});
 
 const gridSize = 20;
 let snake = [{ x: 200, y: 200 }];
@@ -48,6 +41,14 @@ function resizeCanvas() {
         food = randomFood();
     }
 }
+
+resizeCanvas();
+window.addEventListener("resize", () => {
+    const wasRunning = gameStarted; // salva se stava giocando
+    gameStarted = false;            // blocca il movimento
+    resizeCanvas();                 // ridimensiona correttamente
+    if (wasRunning) gameStarted = true; // riprende se serviva
+});
 
 function randomFood() {
     let newPos;

@@ -164,7 +164,7 @@ function draw() {
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(part.x, part.y, gridSize, gridSize);
             
-            ctx.strokeStyle = "#000000";
+            ctx.strokeStyle = "#111";
             ctx.lineWidth = 3;
             ctx.strokeRect(part.x, part.y, gridSize, gridSize);
         }

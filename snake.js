@@ -180,7 +180,7 @@ function draw() {
     // disegna serpente (testa con immagine)
     snake.forEach((part, index) => {
         if (index === 0) {
-            const HEAD_SCALE = 6; // ingrandisci come vuoi!
+            const HEAD_SCALE = 10; // ingrandisci come vuoi!
             const size = gridSize * HEAD_SCALE;
             ctx.drawImage(
                 headImg,

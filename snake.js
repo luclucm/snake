@@ -1,3 +1,4 @@
+let gameStarted = false;
 let wrapMode = false; // false = muri letali, true = wrap-around
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -35,11 +36,13 @@ function randomFood() {
 document.getElementById("wallsBtn").onclick = () => {
     wrapMode = false;
     document.getElementById("startMenu").style.display = "none";
+    gameStarted = true;  // <-- Avvia gioco
 };
 
 document.getElementById("wrapBtn").onclick = () => {
     wrapMode = true;
     document.getElementById("startMenu").style.display = "none";
+    gameStarted = true;  // <-- Avvia gioco
 };
 
 document.addEventListener("keydown", changeDirection);
@@ -60,8 +63,10 @@ function changeDirection(e) {
 }
 
 function gameLoop() {
+    if (gameStarted) {
     update();
     draw();
+    }
     setTimeout(gameLoop, vel);
 }
 

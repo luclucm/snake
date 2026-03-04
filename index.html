@@ -10,6 +10,23 @@
 <body>
     <h1>Snake Game</h1>
     <h2>Score: <span id="score">0</span></h2>
+
+    <div id="startMenu" style="
+        position:absolute;
+        top:0; left:0; right:0; bottom:0;
+        background:#000a;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        gap:20px;
+        font-size:22px;
+        color:white;
+    ">
+        <div>Scegli la modalità:</div>
+        <button id="wallsBtn" style="padding:10px 20px; font-size:20px;">Muri letali</button>
+        <button id="wrapBtn" style="padding:10px 20px; font-size:20px;">Teletrasporto ai bordi</button>
+    </div>
     
     <canvas id="gameCanvas" width="800" height="600"></canvas>
 

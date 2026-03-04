@@ -97,10 +97,10 @@ function update() {
     
     const new_head = { x: nx, y: ny };
 
-    snake.unshift(head);
+    snake.unshift(new_head);
 
     // mangia il cibo
-    if (head.x === food.x && head.y === food.y) {
+    if (new_head.x === food.x && new_head.y === food.y) {
         score++;
         if (vel>20) {
             vel=vel-5;
@@ -113,7 +113,7 @@ function update() {
 
     // collisione con se stesso
     for (let i = 1; i < snake.length; i++) {
-        if (snake[i].x === head.x && snake[i].y === head.y) {
+        if (snake[i].x === new_head.x && snake[i].y === new_head.y) {
             alert("Game Over!");
             document.location.reload();
         }

@@ -135,7 +135,7 @@ function draw() {
             ctx.fillRect(part.x, part.y, gridSize, gridSize);
             
             ctx.strokeStyle = "#000000";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 3;
             ctx.strokeRect(part.x, part.y, gridSize, gridSize);
         }
     });

@@ -1,12 +1,13 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const gridSize = 15;
+const gridSize = 20;
 let snake = [{ x: 200, y: 200 }];
 let dx = gridSize;
 let dy = 0;
 
 let score = 0;
+let vel = 150;
 
 // Caricamento immagini
 const foodImg = new Image();
@@ -43,7 +44,7 @@ function changeDirection(e) {
 function gameLoop() {
     update();
     draw();
-    setTimeout(gameLoop, 150);
+    setTimeout(gameLoop, vel);
 }
 
 function update() {
@@ -65,6 +66,9 @@ function update() {
     // mangia il cibo
     if (head.x === food.x && head.y === food.y) {
         score++;
+        if (vel>=15) {
+            vel=vel-5;
+        }
         document.getElementById("score").textContent=score;
         food = randomFood();
     } else {

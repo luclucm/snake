@@ -66,7 +66,7 @@ function update() {
     // mangia il cibo
     if (head.x === food.x && head.y === food.y) {
         score++;
-        if (vel>=15) {
+        if (vel>20) {
             vel=vel-5;
         }
         document.getElementById("score").textContent=score;

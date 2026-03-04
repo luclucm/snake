@@ -20,7 +20,7 @@ headImg.src = "head.png"
 let food = randomFood();
 
 
-onst GRID_PERCENT = 0.04;
+const GRID_PERCENT = 0.04;
 
 function resizeCanvas() {
     const paddingX = 40;   // margine orizzontale

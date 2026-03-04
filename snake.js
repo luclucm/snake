@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const gridSize = 10;
+const gridSize = 15;
 let snake = [{ x: 200, y: 200 }];
 let dx = gridSize;
 let dy = 0;
@@ -43,7 +43,7 @@ function changeDirection(e) {
 function gameLoop() {
     update();
     draw();
-    setTimeout(gameLoop, 100);
+    setTimeout(gameLoop, 150);
 }
 
 function update() {

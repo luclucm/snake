@@ -24,44 +24,39 @@ const GRID_PERCENT = 0.04;
 
 function resizeCanvas() {
     const paddingX = 40;   // margine orizzontale
-    const paddingB = 20;   // margine inferiore
+    const paddingTop = 150; // spazio per titolo + punteggio + menu
+    const paddingBottom = 20;
 
     // Larghezza disponibile
     const availW = Math.max(200, window.innerWidth - paddingX);
 
-    // Altezza disponibile *sotto le scritte*:
-    // prendiamo la posizione del canvas nella pagina e sottraiamo altezze
-    const canvasTop = canvas.getBoundingClientRect().top + window.scrollY;
-    const availH = Math.max(200, window.innerHeight - canvasTop - paddingB);
+    // Altezza disponibile sotto le scritte
+    const availH = Math.max(200, window.innerHeight - paddingTop - paddingBottom);
 
-    // Calcolo gridSize in funzione della dimensione disponibile
-    const base = Math.min(availW, availH);                 // dimensione di riferimento
-    const newGrid = Math.max(10, Math.floor(base * GRID_PERCENT)); // cella in px (min 10px)
-
-    // Aggiorno gridSize dinamico
+    // GRID_SIZE dinamico percentuale
+    const base = Math.min(availW, availH);
+    const newGrid = Math.max(20, Math.floor(base * GRID_PERCENT));
     gridSize = newGrid;
 
-    // Numero di celle intere che entrano
     const cols = Math.floor(availW / gridSize);
     const rows = Math.floor(availH / gridSize);
 
-    // Imposto le dimensioni effettive del canvas come multipli della griglia
-    canvas.width  = Math.max(cols, 10) * gridSize;
+    canvas.width = Math.max(cols, 10) * gridSize;
     canvas.height = Math.max(rows, 10) * gridSize;
 
-    // Riallineo dx/dy alla nuova griglia mantenendo la direzione
+    // Aggiorna dx/dy
     if (dx !== 0) dx = Math.sign(dx) * gridSize;
     if (dy !== 0) dy = Math.sign(dy) * gridSize;
 
-    // Allineo le coordinate del serpente alla nuova griglia (snap alla cella)
+    // Riallinea serpente
     snake = snake.map(seg => ({
-        x: Math.min(Math.max(0, Math.floor(seg.x / gridSize) * gridSize), canvas.width  - gridSize),
+        x: Math.min(Math.max(0, Math.floor(seg.x / gridSize) * gridSize), canvas.width - gridSize),
         y: Math.min(Math.max(0, Math.floor(seg.y / gridSize) * gridSize), canvas.height - gridSize),
     }));
 
-    // Se il cibo è fuori o non è allineato, rigeneralo
+    // riallinea food
     const foodAligned = (food.x % gridSize === 0) && (food.y % gridSize === 0);
-    const foodInside  = (food.x < canvas.width) && (food.y < canvas.height);
+    const foodInside = (food.x < canvas.width) && (food.y < canvas.height);
     if (!foodAligned || !foodInside) {
         food = randomFood();
     }

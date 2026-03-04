@@ -9,7 +9,7 @@ let dx = gridSize;
 let dy = 0;
 
 let score = 0;
-let vel = 150;
+let vel = 180;
 
 // Caricamento immagini
 const foodImg = new Image();
@@ -180,7 +180,7 @@ function draw() {
     // disegna serpente (testa con immagine)
     snake.forEach((part, index) => {
         if (index === 0) {
-            const HEAD_SCALE = 3; // ingrandisci come vuoi!
+            const HEAD_SCALE = 4; // ingrandisci come vuoi!
             const size = gridSize * HEAD_SCALE;
             ctx.drawImage(
                 headImg,
